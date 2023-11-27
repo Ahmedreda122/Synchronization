@@ -1,15 +1,36 @@
-public class Device {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.print("Hello and welcome!");
+public class Device implements Runnable{
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    private String name;
+    private String type;
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+    Device(String name, String type){
+        this.name = name;
+        this.type = type;
     }
+    @Override
+    public void run() {
+        connect();
+        performOnlineActivity();
+        disconnect();
+    }
+
+    public void connect(){
+        System.out.println(this.name + " logged in");
+    }
+
+    public void performOnlineActivity(){
+        System.out.println(this.name + " performs online activity");
+    }
+
+    public void disconnect(){
+        System.out.println(this.name + " logged out");
+    }
+
+    public String getName(){
+        return name;
+    }
+    public String getType(){
+        return type;
+    }
+
 }
