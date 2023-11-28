@@ -11,6 +11,7 @@ public class Device implements Runnable{
     public void run() {
         connect();
         performOnlineActivity();
+//        System.out.println("Connection" 2: "" + this.name + "performs online activity");
         disconnect();
     }
 
