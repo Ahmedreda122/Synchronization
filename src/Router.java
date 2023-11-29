@@ -15,11 +15,22 @@ public class Router {
       ifConnected.add(false);
     }
   }
+  private Boolean checkIfNoConn(){
+    boolean f = false;
+    for(int i = 0; i < ifConnected.size();i++){
+      if(ifConnected.get(i)){f = true;break;}
+    }
+    return f;
+  }
 
   // 4
   // 1 2 3 4
   // 0 0 0 0
-  public int occupyConnection(Device device) {
+  public synchronized int occupyConnection(Device device) throws InterruptedException  {
+
+    if(checkIfNoConn()){
+      System.out.println("No Available Connections"); 
+    }
     spaces.P(device); // waite(device)
     int setDeviceID = 0;
     for (int i = 0; i < nConnections; i++) {
@@ -37,8 +48,12 @@ public class Router {
     return setDeviceID;
   }
 
-  public void releaseConnection(Device device) {
+  private void throwIoException(String string) {
+  }
+  public synchronized void releaseConnection(Device device) {
 //        connections.P(device); // waite(device)
+
+    
     ifConnected.set(device.getDeviceID(), false); // waite(device)
     device.disconnect();
     spaces.V();
