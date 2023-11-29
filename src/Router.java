@@ -11,6 +11,7 @@ public class Router {
   Router(int nConnections) {
     this.nConnections = nConnections;
     spaces = new Semaphore(nConnections);
+
     for (int i = 0; i < nConnections; i++) {
       ifConnected.add(false);
     }
@@ -51,11 +52,7 @@ public class Router {
   private void throwIoException(String string) {
   }
   public void releaseConnection(Device device) {
-//        connections.P(device); // waite(device)
-
-
-    ifConnected.set(device.getDeviceID(), false); // waite(device)
-    device.disconnect();
+    ifConnected.set(device.getDeviceID(), false); // wait(device)
     spaces.V();
   }
 }

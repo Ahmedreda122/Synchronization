@@ -1,5 +1,4 @@
 public class Device implements Runnable{
-
     private String name;
     private String type;
     Router router;
@@ -15,20 +14,19 @@ public class Device implements Runnable{
         try {
             connect();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("run Error: " + e);
         }
         performOnlineActivity();
-//        System.out.println("Connection" 2: "" + this.name + "performs online activity");
         disconnect();
     }
 
     public void connect() throws InterruptedException{
         deviceID = router.occupyConnection(this); // set deviceID for (this) device
-        System.out.println("Connection "+this.deviceID+": "+this.name + " login");
+        System.out.println("Connection "+ this.deviceID+ ": " +this.name + " login");
     }
 
     public void performOnlineActivity(){
-        System.out.println(this.name + " performs online activity");
+        System.out.println("Connection " + this.deviceID + ": " + this.name + " performs online activity");
     }
 
     public void disconnect(){
@@ -43,5 +41,4 @@ public class Device implements Runnable{
         return type;
     }
     public Integer getDeviceID(){return deviceID;}
-
 }

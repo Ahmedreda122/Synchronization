@@ -13,7 +13,7 @@ public class Semaphore {
     value--;
     if (value < 0) {
       try {
-        System.out.println("(" + device.getName() + ") (" + device.getType() + ")" + "arrived and waiting");
+        System.out.println("(" + device.getName() + ") (" + device.getType() + ")" + " arrived and waiting");
         wait();
       } catch (InterruptedException e) {
         System.out.println(e);
