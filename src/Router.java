@@ -2,27 +2,45 @@ import java.util.ArrayList;
 
 public class Router {
 
-    private Integer nConnections = 0; // max connections
+  private Integer nConnections = 0; // max device connections
 
-    private Semaphore spaces = new Semaphore(nConnections);
-//    private Semaphore connections = new Semaphore(0);
-    ArrayList<Boolean> ifConnected = new ArrayList<>(nConnections);
+  private Semaphore spaces;
+  //    private Semaphore connections = new Semaphore(0);
+  ArrayList<Boolean> ifConnected = new ArrayList<>(nConnections);
 
-    Router(int nConnections){
-        this.nConnections = nConnections;
+  Router(int nConnections) {
+    this.nConnections = nConnections;
+    spaces = new Semaphore(nConnections);
+    for (int i = 0; i < nConnections; i++) {
+      ifConnected.add(false);
     }
+  }
 
+  // 4
+  // 1 2 3 4
+  // 0 0 0 0
+  public int occupyConnection(Device device) {
+    spaces.P(device); // waite(device)
+    int setDeviceID = 0;
+    for (int i = 0; i < nConnections; i++) {
+      if (!ifConnected.get(i)) {
+        setDeviceID = i;
+        ifConnected.set(i, true);
+//              (nConnections-spaces.value)
+        System.out.println("Connection " + i + ": " + device.getName() + " Occupied");
+        break;
+      }
+    }
+//      device.connect();
+//      device.performOnlineActivity();
+//        connections.V();
+    return setDeviceID;
+  }
 
-    public void occupyConnection(Device device){
-        spaces.P(device); // waite(device)
-        System.out.println("Connection " + (nConnections-spaces.value) + " " + device.getName() + " Occupied");
-        device.connect();
-        device.performOnlineActivity();
-        connections.V();
-    }
-    public void releaseConnection(Device device){
-        connections.P(device); // waite(device)
-        device.disconnect();
-        spaces.V();
-    }
+  public void releaseConnection(Device device) {
+//        connections.P(device); // waite(device)
+    ifConnected.set(device.getDeviceID(), false); // waite(device)
+    device.disconnect();
+    spaces.V();
+  }
 }

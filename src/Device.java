@@ -2,7 +2,8 @@ public class Device implements Runnable{
 
     private String name;
     private String type;
-
+    Router router;
+    private int deviceID;
     Device(String name, String type){
         this.name = name;
         this.type = type;
@@ -16,7 +17,8 @@ public class Device implements Runnable{
     }
 
     public void connect(){
-        System.out.println(this.name + " logged in");
+        deviceID=router.occupyConnection(this); // set deviceID for (this) device
+        System.out.println("Connection "+this.deviceID+": "+this.name + " login");
     }
 
     public void performOnlineActivity(){
@@ -24,7 +26,7 @@ public class Device implements Runnable{
     }
 
     public void disconnect(){
-        System.out.println(this.name + " logged out");
+        System.out.println("Connection "+this.deviceID+": "+this.name + " logged out");
     }
 
     public String getName(){
@@ -33,5 +35,6 @@ public class Device implements Runnable{
     public String getType(){
         return type;
     }
+    public Integer getDeviceID(){return deviceID;}
 
 }
