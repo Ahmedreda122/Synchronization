@@ -12,14 +12,16 @@ public class Network {
       maxNumConnections = input.nextInt();
       System.out.println("What is the number of devices Clients want to connect?");
       maxNumDevices = input.nextInt();
-      Router router = new Router(maxNumConnections);
-      for (int i = 0; i < maxNumDevices; i++) {
+    Router router = new Router(maxNumConnections);
+    Thread thread = new Thread(devices.get(i));
+    for (int i = 0; i < maxNumDevices; i++) {
         String name = input.next();
         String type = input.next();
         devices.add(new Device(name, type, router));
       }
+    thread.start();
 
-      for (int i = 0; i < maxNumDevices; i++){
+    for (int i = 0; i < maxNumDevices; i++){
         devices.get(i).run();
       }
   }

@@ -26,10 +26,10 @@ public class Router {
   // 4
   // 1 2 3 4
   // 0 0 0 0
-  public synchronized int occupyConnection(Device device) throws InterruptedException  {
+  public int occupyConnection(Device device)  {
 
     if(checkIfNoConn()){
-      System.out.println("No Available Connections"); 
+      System.out.println("No Available Connections");
     }
     spaces.P(device); // waite(device)
     int setDeviceID = 0;
@@ -50,10 +50,10 @@ public class Router {
 
   private void throwIoException(String string) {
   }
-  public synchronized void releaseConnection(Device device) {
+  public void releaseConnection(Device device) {
 //        connections.P(device); // waite(device)
 
-    
+
     ifConnected.set(device.getDeviceID(), false); // waite(device)
     device.disconnect();
     spaces.V();

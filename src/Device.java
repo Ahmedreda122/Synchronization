@@ -9,6 +9,7 @@ public class Device implements Runnable{
         this.type = type;
         this.router = r;
     }
+
     @Override
     public void run() {
         try {
